@@ -18,7 +18,6 @@ color_yellow = (222, 235, 143)
 color_score = (133, 64, 15)
 
 snake_block = 10
-snake_speed = 10
 
 clock = pygame.time.Clock()
 
@@ -29,6 +28,14 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 def your_score(score):
     value = score_font.render("Очки: " + str(score), True, color_score)
     dis.blit(value, [0, 0])
+
+def your_level(score, snake_speed):
+    value = score // 5 + 1
+    value = score_font.render("Уровень: " + str(value), True, color_score)
+
+    snake_speed = value * 10
+
+    dis.blit(value, [200, 0])
 
 
 def our_snake(snake_block, snake_list):
@@ -48,6 +55,7 @@ def gameLoop():
     y1 = dis_height / 2
     x1_change = 0
     y1_change = 0
+    snake_speed = 10
 
     snake_list = []
     snake_lenght = 1
@@ -106,7 +114,10 @@ def gameLoop():
                 game_close = True
         our_snake(snake_block, snake_list)
         your_score(snake_lenght - 1)
+        your_level(snake_lenght - 1, snake_speed)
         pygame.draw.rect(dis, color_black, [x1, y1, snake_block, snake_block])
+
+
 
         pygame.display.update()
 
