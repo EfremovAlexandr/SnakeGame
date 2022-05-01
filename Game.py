@@ -22,14 +22,14 @@ snake_speed = 10
 
 clock = pygame.time.Clock()
 
-
-
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
+
 
 def your_score(score):
     value = score_font.render("Очки: " + str(score), True, color_score)
     dis.blit(value, [0, 0])
+
 
 def our_snake(snake_block, snake_list):
     for x in snake_list:
@@ -37,16 +37,15 @@ def our_snake(snake_block, snake_list):
 
 
 def message(msg, color):
-
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [dis_width/10, dis_height/2])
+    dis.blit(mesg, [dis_width / 10, dis_height / 2])
+
 
 def gameLoop():
-
     game_over = False
     game_close = False
-    x1 = dis_width/2
-    y1 = dis_height/2
+    x1 = dis_width / 2
+    y1 = dis_height / 2
     x1_change = 0
     y1_change = 0
 
@@ -57,7 +56,7 @@ def gameLoop():
     foody = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
 
     while not game_over:
-        while  game_close == True:
+        while game_close == True:
             dis.fill(color_white)
             message("ТЫ ПРОИГРАЛ! В-Выход, И-Играть", color_red)
 
@@ -106,7 +105,7 @@ def gameLoop():
             if x == snake_head:
                 game_close = True
         our_snake(snake_block, snake_list)
-        your_score(snake_lenght-1)
+        your_score(snake_lenght - 1)
         pygame.draw.rect(dis, color_black, [x1, y1, snake_block, snake_block])
 
         pygame.display.update()
@@ -119,5 +118,6 @@ def gameLoop():
         clock.tick(snake_speed)
     pygame.quit()
     quit()
+
 
 gameLoop()
