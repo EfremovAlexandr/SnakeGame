@@ -8,7 +8,7 @@ dis_height = 600
 
 dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.update()
-pygame.display.set_caption('Змейка для Димы')
+pygame.display.set_caption('Змейка для  Димы')
 
 color_white = (255, 255, 255)
 color_black = (0, 0, 0)
