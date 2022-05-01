@@ -16,6 +16,7 @@ color_blue = (0, 0, 255)
 color_red = (255, 0, 0)
 color_yellow = (222, 235, 143)
 color_score = (133, 64, 15)
+
 snake_block = 10
 snake_speed = 10
 
