@@ -31,11 +31,12 @@ def your_score(score):
 
 def your_level(score, snake_speed):
     value = score // 5 + 1
-    value = score_font.render("Уровень: " + str(value), True, color_score)
-
     snake_speed = value * 10
-
+    value = score_font.render("Уровень: " + str(value), True, color_score)
     dis.blit(value, [200, 0])
+
+    value = score_font.render("Скорость: " + str(snake_speed), True, color_score)
+    dis.blit(value, [400, 0])
 
 
 def our_snake(snake_block, snake_list):
