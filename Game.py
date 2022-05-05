@@ -30,7 +30,7 @@ def your_score(score):
 def your_level(score, snake):
     value = score + 1
     snake.speed = ((value//5)+1) * 5
-    value = score_font.render("Уровень: " + str(value), True, color_score)
+    value = score_font.render("Уровень: " + str(((value//5)+1)), True, color_score)
     dis.blit(value, [200, 0])
     value = score_font.render("Скорость: " + str(snake.speed), True, color_score)
     dis.blit(value, [400, 0])
@@ -96,7 +96,14 @@ def gameLoop():
         y1 += y1_change
         dis.fill(color_yellow)
 
-        pygame.draw.rect(dis, color_blue, [foodx, foody, snake.snake_block, snake.snake_block])
+        #pygame.draw.rect(dis, color_blue, [foodx, foody, snake.snake_block, snake.snake_block])
+        image = pygame.image.load('images/red_apple.png')
+        rect_image = image.get_rect()
+        rect_image.x = foodx
+        rect_image.y = foody
+        rect_image.size = (snake.snake_block, snake.snake_block)
+        dis.blit(image, rect_image)
+
         value = score_font.render("яблоко: x " + str(foodx) + " y " + str(foody), True, color_score)
         dis.blit(value, [0, 60])
 
