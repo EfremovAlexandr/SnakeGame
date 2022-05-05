@@ -104,8 +104,8 @@ def gameLoop():
         rect_image.size = (snake.snake_block, snake.snake_block)
         dis.blit(image, rect_image)
 
-        value = score_font.render("яблоко: x " + str(foodx) + " y " + str(foody), True, color_score)
-        dis.blit(value, [0, 60])
+        #value = score_font.render("яблоко: x " + str(foodx) + " y " + str(foody), True, color_score)
+        #dis.blit(value, [0, 60])
 
         snake_head = snake.addbody(x1, y1)
 
