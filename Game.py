@@ -28,7 +28,7 @@ def your_score(score):
     dis.blit(value, [0, 0])
 
 def your_level(score, snake):
-    value = score + 1
+    value = score
     snake.speed = ((value//5)+1) * 5
     value = score_font.render("Уровень: " + str(((value//5)+1)), True, color_score)
     dis.blit(value, [200, 0])
