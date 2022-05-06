@@ -1,6 +1,6 @@
 import pygame
-import random
 from snake import Snake
+from apple import Apple
 
 pygame.init()
 
@@ -23,36 +23,38 @@ clock = pygame.time.Clock()
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
+
 def your_score(score):
     value = score_font.render("Очки: " + str(score), True, color_score)
     dis.blit(value, [0, 0])
 
+
 def your_level(score, snake):
     value = score
-    snake.speed = ((value//5)+1) * 5
-    value = score_font.render("Уровень: " + str(((value//5)+1)), True, color_score)
+    snake.speed = ((value // 5) + 1) * 5
+    value = score_font.render("Уровень: " + str(((value // 5) + 1)), True, color_score)
     dis.blit(value, [200, 0])
     value = score_font.render("Скорость: " + str(snake.speed), True, color_score)
     dis.blit(value, [400, 0])
+
 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 10, dis_height / 2])
 
 
-def gameLoop():
-
+def gameloop():
+    pygame.mixer.music.load('sounds/snake_crowling.mp3')
+    pygame.mixer.music.play(-1)
     snake = Snake(dis)
-
+    apple = Apple()
+    apple.apple_coordinates(dis_width, dis_height)
     game_over = False
     game_close = False
     x1 = dis_width / 2
     y1 = dis_height / 2
     x1_change = 0
     y1_change = 0
-
-    foodx = round(random.randrange(0, dis_width - snake.snake_block) / 10.0) * 10.0
-    foody = round(random.randrange(0, dis_height - snake.snake_block) / 10.0) * 10.0
 
     while not game_over:
         while game_close == True:
@@ -66,7 +68,7 @@ def gameLoop():
                         game_over = True
                         game_close = False
                     elif event.key == pygame.K_b:
-                        gameLoop()
+                        gameloop()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -91,45 +93,39 @@ def gameLoop():
 
         if x1 < 0 or x1 >= dis_width or y1 < 0 or y1 > dis_height:
             game_close = True
-
+            s = pygame.mixer.Sound("sounds/zvuk-kogda-uroven-ne-proshli.wav")
+            s.play()
         x1 += x1_change
         y1 += y1_change
         dis.fill(color_yellow)
 
-        #pygame.draw.rect(dis, color_blue, [foodx, foody, snake.snake_block, snake.snake_block])
-        image = pygame.image.load('images/red_apple.png')
-        rect_image = image.get_rect()
-        rect_image.x = foodx
-        rect_image.y = foody
-        rect_image.size = (snake.snake_block, snake.snake_block)
-        dis.blit(image, rect_image)
-
-        #value = score_font.render("яблоко: x " + str(foodx) + " y " + str(foody), True, color_score)
-        #dis.blit(value, [0, 60])
-
         snake_head = snake.addbody(x1, y1)
-
 
         if len(snake.snake_list) > snake.lenght:
             del snake.snake_list[0]
         for x in snake.snake_list[:-1]:
             if x == snake_head:
                 game_close = True
+                s = pygame.mixer.Sound("sounds/zvuk-kogda-uroven-ne-proshli.wav")
+                s.play()
         snake.output()
+        apple.output(dis)
 
         your_score(snake.lenght - 1)
         your_level(snake.lenght - 1, snake)
 
         pygame.display.update()
 
-        if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(0, dis_width - snake.snake_block) / 10.0) * 10.0
-            foody = round(random.randrange(0, dis_height - snake.snake_block) / 10.0) * 10.0
+        if x1 == apple.x and y1 == apple.y:
+            s = pygame.mixer.Sound("sounds/sglatyivanie-byistroe.wav")
+            s.play()
             snake.lenght += 1
+            apple.get_color()
+            apple.apple_coordinates(dis_width, dis_height)
 
         clock.tick(snake.speed)
     pygame.quit()
     quit()
 
 
-gameLoop()
+gameloop()
